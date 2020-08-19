@@ -26,7 +26,12 @@ io.on('connect', socket => {
         console.log(`${userId} joined the room ${roomId}`);
         socket.join(roomId);
         socket.to(roomId).broadcast.emit('user-connected', userId)
+        socket.on('message', (msg) => {
+            console.log(msg)
+            io.to(roomId).emit('create-message', msg)
+        })
     })
+
 })
 
 
